@@ -15,7 +15,7 @@ scan_js() {
 
     # Scan for JavaScript files
     echo "Scanning for JavaScript files on ${domain}..."
-    echo "${domain}" | katana | grep "\.js$" | httpx -mc 200 | tee "${base_dir}/js.txt"
+    # echo "${domain}" | katana | grep "\.js$" | httpx -mc 200 | tee "${base_dir}/js.txt"
     # echo "${domain}" | gau | grep "\.js$" | httpx -mc 200 | tee "${base_dir}/js.txt"
     cat allUrls_${domain}.txt | grep "\.js$" | httpx -mc 200 | tee "${base_dir}/js.txt"
     echo "------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------"
