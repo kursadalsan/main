@@ -9,9 +9,7 @@ url_enumeration() {
     
     # gau
     echo "Running gau for ${domain}..."
-    gau "${domain}" --subs --blacklist png,jpg,gif,jpeg,swf,woff,svg --o "${base_dir}/${domain}_temp_gau.txt"
-    cat "${base_dir}/${domain}_temp_gau.txt" >> "${base_dir}/allUrls_${domain}.txt"
-    rm "${base_dir}/${domain}_temp_gau.txt"
+    gau "${domain}" --subs --blacklist png,jpg,gif,jpeg,swf,woff,svg | tee -a "${base_dir}/allUrls_${domain}.txt" > /dev/null
     echo "------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------"
 
     # katana
