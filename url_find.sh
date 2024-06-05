@@ -19,7 +19,7 @@ url_enumeration() {
 
     # waymore
     echo "Running waymore for ${domain}..."
-    waymore -i ${domain}" -mode U -c /$HOME/config.yml -oU "${base_dir}/allUrls_${domain}.txt"
+    waymore -i "${domain}" -mode U -c "${HOME}/config.yml" -oU "${base_dir}/allUrls_${domain}.txt"
     echo "------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------"
 
     # Remove duplicate URLs
@@ -31,7 +31,7 @@ url_enumeration() {
     cat "${base_dir}/allUrls_${domain}.txt" | httpx -mc 200,403,500 -o "${base_dir}/liveallurls_${domain}.txt" 2>/dev/null
     echo "------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------"
 
-    mkdir -p "${base_dir}/vulv/"
+    mkdir -p "${base_dir}/vuln/"
     
     #find endpoints for specific attacks
     tests=(
@@ -53,11 +53,10 @@ url_enumeration() {
     for test in "${tests[@]}"; do
         echo "Running gf for $test..."
         # Output the result to a file named after the test in the specified vuln subdirectory
-        cat "${base_dir}/liveallurls_${domain}.txt" | gf $test > "${base_dir}/vulv/$test.txt"
+        cat "${base_dir}/liveallurls_${domain}.txt" | gf $test > "${base_dir}/vuln/$test.txt"
     done
 
     paramspider --domain "${domain}" --exclude woff,css,js,png,svg,php,jpg --output "${base_dir}/paramspider_${domain}.txt"
-
 }
 
 # Check if domain is provided
