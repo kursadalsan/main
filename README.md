@@ -41,7 +41,7 @@ cd main
 chmod +x install.sh
 ./install.sh
 
-## Usafe 
+## Usage 
 Then, you can use the main.sh script to run all tasks sequentially for a given domain:
 
 ```bash
