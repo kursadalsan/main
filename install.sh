@@ -13,67 +13,43 @@ echo "done"
 # Install dependencies
 sudo apt-get install -y python3 python3-pip python3-venv git curl unzip
 
-#install go
-# if [[ -z "$GOPATH" ]];then
-# echo "It looks like go is not installed, would you like to install it now"
-# PS3="Please select an option : "
-# choices=("yes" "no")
-# select choice in "${choices[@]}"; do
-#         case $choice in
-#                 yes)
 
-# 					echo "Installing Golang"
-# 					wget https://dl.google.com/go/go1.20.1.linux-amd64.tar.gz
-#                     sudo tar -C /usr/local -xzf go1.20.1.linux-amd64.tar.gz
-# 					sudo mv go /usr/local
-# 					export GOROOT=/usr/local/go
-# 					export GOPATH=$HOME/go
-# 					export PATH=$GOPATH/bin:$GOROOT/bin:$PATH
-# 					echo 'export GOROOT=/usr/local/go' >> ~/.bash_profile
-# 					echo 'export GOPATH=$HOME/go'	>> ~/.bash_profile			
-# 					echo 'export PATH=$GOPATH/bin:$GOROOT/bin:$PATH' >> ~/.bash_profile	
-# 					source ~/.bash_profile
-# 					sleep 1
-# 					break
-# 					;;
-# 				no)
-# 					echo "Please install go and rerun this script"
-# 					echo "Aborting installation..."
-# 					exit 1
-# 					;;
-# 	esac	
-# done
-# fi
-
-sudo apt install golang
+wget https://golang.org/dl/go1.22.4.linux-amd64.tar.gz
+sudo tar -C /usr/local -xzf go1.22.4.linux-amd64.tar.gz
 echo 'export GOPATH=$HOME/go' >> ~/.bashrc
 echo 'export PATH=$PATH:/usr/local/go/bin:$GOPATH/bin' >> ~/.bashrc
+echo 'export PATH=$PATH:/usr/local/go/bin:$HOME/go/bin' >> ~/.profile
+source ~/.profile
 source ~/.bashrc
 
 # Install subdomain script 
 
 # Install subfinder
 echo "Installing subfinder..."
-go install -v github.com/projectdiscovery/subfinder/v2/cmd/subfinder@latest
-sudo cp ~/go/bin/subfinder /usr/local/bin/
+echo export PATH=$PATH:$HOME/go/bin >> $home/.bashrc
+source $home/.bashrc
+git clone https://github.com/projectdiscovery/subfinder.git
+cd subfinder/v2/cmd/subfinder
+go build
+mv subfinder /usr/local/bin/
 
 # Install Sublist3r
 echo "Installing Sublist3r..."
-git clone https://github.com/aboul3la/Sublist3r.git
-cd Sublist3r
-pip3 install -r requirements.txt
-sudo cp sublist3r.py /usr/local/bin/sublist3r
-cd ..
+echo "Installing waymore..."
+sudo apt install -y pipx 
+pipx ensurepath	
+pipx install git+https://github.com/RoninNakomoto/Sublist3r2.git
+pipx ensurepath
 
 # Install amass
 echo "Installing amass..."
-go install -v github.com/OWASP/Amass/v3/...@latest
-sudo cp ~/go/bin/amass /usr/local/bin/
+go install -v github.com/owasp-amass/amass/v4/...@master
+sudo cp ~/go/bin/amass /usr/bin/
 
 # Install assetfinder
 echo "Installing assetfinder..."
 go install -v github.com/tomnomnom/assetfinder@latest
-sudo cp ~/go/bin/assetfinder /usr/local/bin/
+sudo cp ~/go/bin/assetfinder /usr/bin/
 
 # Install findomain
 echo "Installing findomain..."
@@ -84,23 +60,28 @@ sudo mv findomain /usr/local/bin/
 
 # Install crtsh
 echo "Installing crtsh..."
-pip3 install crtsh
+git clone https://github.com/YashGoti/crtsh.py.git
+cd crtsh.py
+mv crtsh.py crtsh
+chmod +x crtsh
+cp crtsh /usr/bin/
+cd ~
 
 # Install httprobe and httpx
 echo "Installing httprobe..."
 go install github.com/tomnomnom/httprobe@latest
-sudo cp ~/go/bin/httprobe /usr/local/bin/
+sudo cp ~/go/bin/httprobe /usr/bin/
 
 echo "Installing httpx..."
 go install -v github.com/projectdiscovery/httpx/cmd/httpx@latest
-sudo cp ~/go/bin/httpx /usr/local/bin/
+sudo cp ~/go/bin/httpx /usr/bin/
 
 echo "Installing gobuster..."
 go install github.com/OJ/gobuster/v3@latest
-sudo cp ~/go/bin/gobuster /usr/local/bin/
+sudo cp ~/go/bin/gobuster /usr/bin/
 
 echo "Installing dirsearch..."
-pip3 install dirsearch
+pipx install git+https://github.com/maurosoria/dirsearch.git
 
 # Install url script 
 
@@ -112,11 +93,7 @@ echo "Installing katana..."
 go install github.com/projectdiscovery/katana/cmd/katana@latest
 sudo cp ~/go/bin/katana /usr/local/bin/
 
-echo "Installing waymore..."
-sudo apt install pipx
-pipx ensurepath	
 pipx install git+https://github.com/xnl-h4ck3r/waymore.git	
-pipx ensurepath
 
 echo "Installing wayback..."
 go install github.com/tomnomnom/waybackurls@latest
@@ -128,19 +105,19 @@ echo "Installing nmap..."
 sudo apt install nmap
 
 echo "Installing naabu..."
+apt install libpcap-dev -y
 go install -v github.com/projectdiscovery/naabu/v2/cmd/naabu@latest
-sudo cp ~/go/bin/naabu /usr/local/bin/
+sudo cp ~/go/bin/naabu /usr/bin/
 
 echo "Installing gf..."
 go install github.com/tomnomnom/gf@latest
+sudo cp go/bin/gf /bin/
 git clone https://github.com/1ndianl33t/Gf-Patterns
-sudo cp ~/go/bin/gf /bin/
 mkdir .gf
 mv ~/Gf-Patterns/*.json ~/.gf
 
 # extra tools
 
 # install paramspider 
-git clone https://github.com/0xKayala/ParamSpider
-cd ParamSpider
-pip3 install -r requirements.txt
+pipx install git+https://github.com/devanshbatham/ParamSpider.git
+pipx ensurepath
