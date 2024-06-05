@@ -32,7 +32,7 @@ This repository contains a set of automated scripts designed to perform various 
   - Naabu
   - Nmap
 
- **Test**: Run it on debian linux os (tested)
+ **Test**: Run it on debian linux os (tested) (after running installation script restart the os for all tools to run properly)
  
 ## Installation
 
