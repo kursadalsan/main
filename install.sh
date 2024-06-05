@@ -3,6 +3,21 @@
 #!/bin/bash
 sudo apt-get update
 
+sudo apt-get install -y libcurl4-openssl-dev
+sudo apt-get install -y libssl-dev
+sudo apt-get install -y jq
+sudo apt-get install -y ruby-full
+sudo apt-get install -y libcurl4-openssl-dev libxml2 libxml2-dev libxslt1-dev ruby-dev build-essential libgmp-dev zlib1g-dev
+sudo apt-get install -y build-essential libssl-dev libffi-dev python-dev
+sudo apt-get install -y python-setuptools
+sudo apt-get install -y libldns-dev
+sudo apt-get install -y python3-pip
+sudo apt-get install -y python-pip
+sudo apt-get install -y python-dnspython
+sudo apt-get install -y git
+sudo apt-get install -y rename
+sudo apt-get install -y xargs
+
 echo "installing bash_profile aliases from recon_profile"
 git clone https://github.com/nahamsec/recon_profile.git
 cd recon_profile
@@ -121,3 +136,60 @@ mv ~/Gf-Patterns/*.json ~/.gf
 # install paramspider 
 pipx install git+https://github.com/devanshbatham/ParamSpider.git
 pipx ensurepath
+
+
+apt-get install nano
+
+CONFIG_CONTENT=$(cat <<EOF
+threads = 2
+verbose = false
+retries = 15
+subdomains = false
+parameters = false
+providers = ["wayback","commoncrawl","otx","urlscan"]
+blacklist = ["ttf","woff","svg","png","jpg"]
+json = false
+
+[urlscan]
+apikey = ""
+
+[filters]
+from = ""
+to = ""
+matchstatuscodes = []
+matchmimetypes = []
+filterstatuscodes = []
+filtermimetypes = ["image/png", "image/jpg", "image/svg+xml"]
+EOF
+)
+
+# Path to the .gau.toml file
+GAU_TOML_PATH="$HOME/.gau.toml"
+
+# Create or overwrite the .gau.toml file with the configuration
+echo "$CONFIG_CONTENT" > "$GAU_TOML_PATH"
+
+CONFIG_CONTENT=$(cat <<EOF
+FILTER_CODE: 404,301,302
+FILTER_MIME: text/css,image/jpeg,image/jpg,image/png,image/svg+xml,image/gif,image/tiff,image/webp,image/bmp,image/vnd,image/x-icon,image/vnd.microsoft.icon,font/ttf,font/woff,font/woff2,font/x-woff2,font/x-woff,font/otf,audio/mpeg,audio/wav,audio/webm,audio/aac,audio/ogg,audio/wav,audio/webm,video/mp4,video/mpeg,video/webm,video/ogg,video/mp2t,video/webm,video/x-msvideo,video/x-flv,application/font-woff,application/font-woff2,application/x-font-woff,application/x-font-woff2,application/vnd.ms-fontobject,application/font-sfnt,application/vnd.android.package-archive,binary/octet-stream,application/octet-stream,application/pdf,application/x-font-ttf,application/x-font-otf,video/webm,video/3gpp,application/font-ttf,audio/mp3,audio/x-wav,image/pjpeg,audio/basic,application/font-otf,application/x-ms-application,application/x-msdownload,video/x-ms-wmv,image/x-png,video/quicktime,image/x-ms-bmp,font/opentype,application/x-font-opentype,application/x-woff,audio/aiff
+FILTER_URL: .css,.jpg,.jpeg,.png,.svg,.img,.gif,.mp4,.flv,.ogv,.webm,.webp,.mov,.mp3,.m4a,.m4p,.scss,.tif,.tiff,.ttf,.otf,.woff,.woff2,.bmp,.ico,.eot,.htc,.rtf,.swf,.image,/image,/img,/css,/wp-json,/wp-content,/wp-includes,/theme,/audio,/captcha,/font,node_modules,/jquery,/bootstrap
+FILTER_KEYWORDS: admin,login,logon,signin,signup,register,registration,dash,portal,ftp,panel,.js,api,robots.txt,graph,gql,config,backup,debug,db,database,git,cgi-bin,swagger,zip,.rar,tar.gz,internal,jira,jenkins,confluence,atlassian,okta,corp,upload,delete,email,sql,create,edit,test,temp,cache,wsdl,log,payment,setting,mail,file,redirect,chat,billing,doc,trace,ftp,gateway,import,proxy,dev,stage,stg,uat,sonar.ci.,.cp.
+URLSCAN_API_KEY:
+VIRUSTOTAL_API_KEY:
+CONTINUE_RESPONSES_IF_PIPED: True
+WEBHOOK_DISCORD: YOUR_WEBHOOK
+DEFAULT_OUTPUT_DIR:
+EOF
+)
+
+# Path to the config.yml file
+CONFIG_YML_PATH="$HOME/config.yml"
+
+# Check if the file exists, if not, create it and add the configuration
+if [ ! -f "$CONFIG_YML_PATH" ]; then
+  echo "File $CONFIG_YML_PATH does not exist. Creating and adding configuration."
+  echo "$CONFIG_CONTENT" > "$CONFIG_YML_PATH"
+else
+  echo "File $CONFIG_YML_PATH exists. Overwriting with new configuration."
+  echo "$CONFIG_CONTENT" > "$CONFIG_YML_PATH"
+fi
