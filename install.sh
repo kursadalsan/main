@@ -8,14 +8,6 @@ sudo apt-get install -y libssl-dev
 sudo apt-get install -y jq
 sudo apt-get install -y ruby-full
 sudo apt-get install -y libcurl4-openssl-dev libxml2 libxml2-dev libxslt1-dev ruby-dev build-essential libgmp-dev zlib1g-dev
-sudo apt-get install -y build-essential libssl-dev libffi-dev python-dev
-sudo apt-get install -y python-setuptools
-sudo apt-get install -y libldns-dev
-sudo apt-get install -y python3-pip
-sudo apt-get install -y python-pip
-sudo apt-get install -y python-dnspython
-sudo apt-get install -y git
-sudo apt-get install -y rename
 sudo apt-get install -y xargs
 
 echo "installing bash_profile aliases from recon_profile"
@@ -111,7 +103,7 @@ sudo cp ~/go/bin/katana /usr/local/bin/
 pipx install git+https://github.com/xnl-h4ck3r/waymore.git	
 
 echo "Installing wayback..."
-go install github.com/tomnomnom/waybackurls@latest
+go install -v github.com/tomnomnom/waybackurls@latest
 sudo cp ~/go/bin/waybackurls /usr/local/bin/
 
 # Install port scan
@@ -120,7 +112,7 @@ echo "Installing nmap..."
 sudo apt install nmap
 
 echo "Installing naabu..."
-apt install libpcap-dev -y
+apt install -y libpcap-dev 
 go install -v github.com/projectdiscovery/naabu/v2/cmd/naabu@latest
 sudo cp ~/go/bin/naabu /usr/bin/
 
