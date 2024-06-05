@@ -36,4 +36,14 @@ This repository contains a set of automated scripts designed to perform various 
 To set up the environment and install all the required tools, run the `install.sh` script:
 
 ```bash
+git clone https://github.com/pg001001/main.git
+cd main
+chmod +x install.sh
 ./install.sh
+
+Then, you can use the main.sh script to run all tasks sequentially for a given domain:
+
+```bash
+./main.sh <domain>
+
+
