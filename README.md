@@ -1,4 +1,4 @@
-# Penetration Testing Automation Scripts
+# Bug Bounty Automation Scripts
 
 ## Overview
 
