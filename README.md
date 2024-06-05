@@ -40,11 +40,12 @@ git clone https://github.com/pg001001/main.git
 cd main
 chmod +x install.sh
 ./install.sh
-```bash
 
+## Usafe 
 Then, you can use the main.sh script to run all tasks sequentially for a given domain:
 
 ```bash
+chmod +x main.sh
 ./main.sh <domain>
 ```bash
 
