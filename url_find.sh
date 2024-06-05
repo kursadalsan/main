@@ -21,7 +21,7 @@ url_enumeration() {
 
     # waymore
     echo "Running waymore for ${domain}..."
-    waymore -i <(echo "${domain}") -mode U >> "${base_dir}/allUrls_${domain}.txt" 2>/dev/null
+    waymore -i ${domain}" -mode U -c /$HOME/config.yml -oU "${base_dir}/allUrls_${domain}.txt"
     echo "------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------"
 
     # Remove duplicate URLs
