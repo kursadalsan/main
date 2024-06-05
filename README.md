@@ -32,6 +32,8 @@ This repository contains a set of automated scripts designed to perform various 
   - Naabu
   - Nmap
 
+ **Test**: Run it on debian linux os (tested)
+ 
 ## Installation
 
 To set up the environment and install all the required tools, run the `install.sh` script:
