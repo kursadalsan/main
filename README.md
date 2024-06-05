@@ -20,6 +20,7 @@ This repository contains a set of automated scripts designed to perform various 
   - katana
   - waymore
   - httpx
+  - gf
   - paramspider
 
 - **JavaScript File Analysis**:
