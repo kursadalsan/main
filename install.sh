@@ -1,6 +1,8 @@
 #!/bin/bash
 
 #!/bin/bash
+mkdir /root/tool
+
 sudo apt-get update
 
 sudo apt-get install -y libcurl4-openssl-dev
@@ -19,7 +21,6 @@ echo "done"
 
 # Install dependencies
 sudo apt-get install -y python3 python3-pip python3-venv git curl unzip
-
 
 wget https://golang.org/dl/go1.22.4.linux-amd64.tar.gz
 sudo tar -C /usr/local -xzf go1.22.4.linux-amd64.tar.gz
@@ -89,6 +90,7 @@ sudo cp ~/go/bin/gobuster /usr/bin/
 
 echo "Installing dirsearch..."
 pipx install git+https://github.com/maurosoria/dirsearch.git
+pipx ensurepath
 
 # Install url script 
 
@@ -101,6 +103,7 @@ go install github.com/projectdiscovery/katana/cmd/katana@latest
 sudo cp ~/go/bin/katana /usr/local/bin/
 
 pipx install git+https://github.com/xnl-h4ck3r/waymore.git	
+pipx ensurepath
 
 echo "Installing wayback..."
 go install -v github.com/tomnomnom/waybackurls@latest
@@ -125,10 +128,28 @@ mv ~/Gf-Patterns/*.json ~/.gf
 
 # extra tools
 
+# install nuclie 
+go install -v github.com/projectdiscovery/nuclei/v3/cmd/nuclei@latest
+sudo cp ~/go/bin/nuclei /usr/local/bin/
+
 # install paramspider 
 pipx install git+https://github.com/devanshbatham/ParamSpider.git
 pipx ensurepath
 
+# install uro
+pipx install git+https://github.com/s0md3v/uro.git
+pipx ensurepath
+
+# install hive (fast scanner for checking live urls)
+pipx install git+https://github.com/gnebbia/halive.git
+pipx runpip halive install requests
+
+# installl js tools
+go install -v github.com/003random/getJS@latest
+sudo cp ~/go/bin/getJS /usr/local/bin/
+
+pipx install git+https://github.com/GerbenJavado/LinkFinder.git
+pipx ensurepath
 
 apt-get install nano
 
@@ -185,3 +206,87 @@ else
   echo "File $CONFIG_YML_PATH exists. Overwriting with new configuration."
   echo "$CONFIG_CONTENT" > "$CONFIG_YML_PATH"
 fi
+
+# Path to the subfinder configuration file
+SUBFINDER_CONFIG_PATH="$HOME/.config/subfinder/config.yaml"
+
+# Create the directory if it doesn't exist
+mkdir -p "$HOME/.config/subfinder"
+
+# Configuration content
+SUBFINDER_CONFIG_CONTENT=$(cat <<EOF
+bevigil: []
+binaryedge: []
+bufferover: []
+builtwith: []
+censys: []
+certspotter: []
+chaos: []
+fullhunt: []
+github: []
+hunter: []
+intelx: []
+leakix: []
+netlas: []
+passivetotal: []
+quake: []
+redhuntlabs: []
+robtex: []
+securitytrails: []
+shodan: []
+threatbook: []
+virustotal: []
+whoisxmlapi: []
+zoomeyeapi: []
+EOF
+)
+
+# Create or overwrite the subfinder configuration file with the specified content
+echo "$SUBFINDER_CONFIG_CONTENT" > "$SUBFINDER_CONFIG_PATH"
+
+# Verify creation
+if [ -f "$SUBFINDER_CONFIG_PATH" ]; then
+  echo "Configuration file created successfully at $SUBFINDER_CONFIG_PATH"
+else
+  echo "Failed to create the configuration file at $SUBFINDER_CONFIG_PATH"
+fi
+
+
+# exploit installation
+
+# xss 
+echo "Installing qsreplace..."
+go install -v github.com/tomnomnom/qsreplace@latest
+sudo cp ~/go/bin/qsreplace /usr/bin/
+
+echo "Installing freq..."
+go install github.com/takshal/freq@latest
+sudo cp ~/go/bin/freq /usr/bin/
+
+# sql
+pipx install git+https://github.com/r0oth3x49/ghauri.git
+pipx ensurepath
+
+# directory transversal
+sudo apt-get install -y git perl libwww-perl
+sudo cpan -i LWP::UserAgent
+cd /root/tool
+git clone https://github.com/wireghoul/dotdotpwn.git
+cd dotdotpwn
+chmod +x dotdotpwn.pl
+sudo ln -s $(pwd)/dotdotpwn.pl /usr/local/bin/dotdotpwn
+export PERL5LIB=$(pwd)
+
+# lfi 
+cd /root/tool
+git clone https://github.com/mzfr/liffy.git
+cd liffy
+python3 -m venv liffy
+source liffy/bin/activate
+pip3 install -r requirements.txt
+deactivate
+
+
+
+
+
