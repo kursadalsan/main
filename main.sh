@@ -27,18 +27,4 @@ echo "Starting JavaScript file analysis..."
 echo "Starting port scanning..."
 ./port_scan.sh "$domain"
 
-# exploit 
-
-mkdir "$domain"/exploit
-
-# xss
-./xss.sh /root/main/"$domain"/vuln/xss.txt
-
-# sql
-./sql.sh /root/main/"$domain"/vuln/sqli.txt
-
-# lfi or directory transversal
-./lfi.sh /root/main/"$domain"/vuln/lfi.txt
-
-
 echo "All tasks completed for ${domain}. Results are stored in the respective directories."
