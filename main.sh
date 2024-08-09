@@ -9,7 +9,7 @@ fi
 domain=$1
 
 # Ensure all required scripts are executable
-chmod +x subdomain_find.sh url_find.sh js_find.sh port_scan.sh xss.sh sql.sh lfi.sh
+chmod +x subdomain_find.sh url_find.sh js_find.sh port_scan.sh 
 
 # Run subdomain enumeration 
 echo "Starting subdomain enumeration..."
